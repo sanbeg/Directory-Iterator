@@ -1,0 +1,9 @@
+Changes
+Makefile.PL
+MANIFEST
+README
+t/Directory-Iterator-PP.t
+lib/Directory/Iterator/PP.pm
+t/data/n/1
+t/data/n/2
+t/data/n/3
