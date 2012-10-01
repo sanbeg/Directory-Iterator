@@ -7,7 +7,7 @@ use warnings;
 
 our $VERSION = '0.01';
 
-use overload '<>' => \&next;
+use overload '<>' => sub{$_[0]->next};
 
 require XSLoader;
 XSLoader::load('Directory::Iterator::XS', $VERSION);

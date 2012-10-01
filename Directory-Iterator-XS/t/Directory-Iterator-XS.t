@@ -35,8 +35,7 @@ do {
   my %save;
   my $file;
   my $i1=0;
-  #while ($file = <$list>) {
-  while ($file = $list->next ) {
+  while ($file = <$list>) {
     $save{ $file } = ++$i1;
   }
   is( keys(%save), 3, "Got 3 files" );
