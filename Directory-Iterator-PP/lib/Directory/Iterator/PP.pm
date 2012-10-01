@@ -2,6 +2,7 @@ package Directory::Iterator::PP;
 
 use strict;
 use Carp;
+use File::Spec;
 
 sub new {
     my $class = shift;
@@ -27,7 +28,7 @@ sub _scan {
 	} else {
 	    next if ( $de =~ m/^\./ );
 	}
-	my $path = "$self->{dir}/$de";
+	my $path = File::Spec->join("$self->{dir}", $de);
 	if ( -d $path and ! -l _) {
 	    push @{$self->{dirs}}, $path;
 	}
@@ -67,6 +68,7 @@ sub prune {
     undef $self->{dh};
 }
 
+use overload '<>' => \&next, '""' => \&get;
 1;
 
 __END__
