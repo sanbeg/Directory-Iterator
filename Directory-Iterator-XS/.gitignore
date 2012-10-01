@@ -1,0 +1,9 @@
+Makefile
+Makefile.old
+DIXS.c
+blib
+pm_to_blib
+*.o
+*.so
+*.bs
+*.tar.gz
