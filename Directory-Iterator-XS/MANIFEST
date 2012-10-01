@@ -11,3 +11,4 @@ t/data/n/1
 t/data/n/2
 t/data/n/3
 lib/Directory/Iterator/XS.pm
+typemap
