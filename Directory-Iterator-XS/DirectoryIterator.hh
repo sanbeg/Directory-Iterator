@@ -31,7 +31,11 @@ public:
     return file_;
   }
   
-  
+  void prune() 
+  {
+    if (dh_) closedir(dh_);
+    dh_ = 0;
+  }
   
 };
 

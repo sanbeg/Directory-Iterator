@@ -35,7 +35,7 @@ bool DirectoryIterator::scan ()
 	    stat(path.c_str(), &buf);
 	    if (S_ISDIR(buf.st_mode)) 
 	      {
-		dirs_.push_back( dir_ + "/" + de->d_name );
+		dirs_.push_back( path );
 	      }
 	    else if (S_ISREG(buf.st_mode)) 
 	      {
@@ -82,4 +82,3 @@ bool DirectoryIterator::next ()
   
 }
 
-      

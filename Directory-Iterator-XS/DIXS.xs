@@ -28,4 +28,7 @@ string
 DirectoryIterator::get()
 
 void
+DirectoryIterator::prune()
+
+void
 DirectoryIterator::DESTROY()
