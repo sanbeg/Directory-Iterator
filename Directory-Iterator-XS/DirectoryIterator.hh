@@ -7,6 +7,8 @@ class DirectoryIterator
 {
 private:
   std::vector<std::string> dirs_;
+  bool show_dotfiles_;
+  
   DIR * dh_;
   std::string file_;
   std::string dir_;
@@ -26,10 +28,16 @@ public:
 
   bool next();
  
+  void show_dotfiles(bool arg) 
+  {
+    show_dotfiles_ = arg? true : false;
+  }
+  
   std::string get() const
   {
-    return file_;
+    return dir_ + "/" + file_;
   }
+
   
   void prune() 
   {

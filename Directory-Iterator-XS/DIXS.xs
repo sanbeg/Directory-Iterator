@@ -14,6 +14,9 @@ PROTOTYPES: disable
 DirectoryIterator *
 DirectoryIterator::new (const char * dir)
 
+void
+DirectoryIterator::show_dotfiles(bool arg)
+
 string
 DirectoryIterator::next()
 CODE:

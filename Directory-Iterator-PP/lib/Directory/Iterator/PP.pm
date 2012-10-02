@@ -15,6 +15,12 @@ sub new {
     bless \%self, $class;
 }
 
+sub show_dotfiles {
+    my $self = shift;
+    my $arg = shift;
+    $self->{show_dotfiles} = $arg? 1 : 0;
+}
+
 sub get {
     my $self = shift;
     return $self->{file};
@@ -23,7 +29,7 @@ sub get {
 sub _scan {
     my $self = shift;
     while (my $de = readdir $self->{dh}) {
-	if ($self->{show_dots}) {
+	if ($self->{show_dotfiles}) {
 	    next if ($de eq '.' or $de eq '..');
 	} else {
 	    next if ( $de =~ m/^\./ );

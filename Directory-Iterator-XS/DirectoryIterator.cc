@@ -12,8 +12,16 @@ bool DirectoryIterator::scan ()
       if (de == 0)
 	break;
       
-      if (de->d_name[0] == '.')
-	continue;
+      if (de->d_name[0] == '.') 
+	{
+	  if (not show_dotfiles_)
+	    continue;
+	  if (de->d_name[1] == 0)
+	    continue;
+	  if ((de->d_name[1] == '.') and (de->d_name[2] == 0))
+	    continue;
+	};
+      
 
 #ifdef _DIRENT_HAVE_D_TYPE
       switch (de->d_type) 
@@ -23,7 +31,7 @@ bool DirectoryIterator::scan ()
 	  break;
 	case DT_REG:
 	  {
-	    file_ = dir_ + "/" + de->d_name;
+	    file_ = de->d_name;
 	    return true;
 	  }
 	  
@@ -39,7 +47,7 @@ bool DirectoryIterator::scan ()
 	      }
 	    else if (S_ISREG(buf.st_mode)) 
 	      {
-		file_ = path;
+		file_ = de->d_name;
 		return true;
 	      }
 	  }
@@ -48,6 +56,7 @@ bool DirectoryIterator::scan ()
 	}
 #endif
     }
+  file_ = "";
   return false;
 }
 
