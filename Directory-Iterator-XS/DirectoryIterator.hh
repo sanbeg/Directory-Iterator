@@ -3,8 +3,6 @@
 #include <sys/types.h>
 #include <dirent.h>
 
-#include <iostream>
-
 class DirectoryIterator
 {
 private:

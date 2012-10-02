@@ -14,6 +14,7 @@ bool DirectoryIterator::scan ()
       
       if (de->d_name[0] == '.')
 	continue;
+
 #ifdef _DIRENT_HAVE_D_TYPE
       switch (de->d_type) 
 	{
@@ -29,8 +30,6 @@ bool DirectoryIterator::scan ()
 	case DT_UNKNOWN:
 #endif
 	  {
-	    
-	    //TODO - check for file type & repeat above logic...
 	    std::string path = dir_ + "/" + de->d_name;
 	    struct stat buf;
 	    stat(path.c_str(), &buf);
