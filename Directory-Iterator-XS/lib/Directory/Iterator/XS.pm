@@ -16,49 +16,61 @@ XSLoader::load('Directory::Iterator::XS', $VERSION);
 
 1;
 __END__
-# Below is stub documentation for your module. You'd better edit it!
+
+
 
 =head1 NAME
 
-Directory::Iterator::XS - Perl extension for blah blah blah
+Directory::Iterator::PP - Recursively list file contents
 
 =head1 SYNOPSIS
 
-  use Directory::Iterator::XS;
-  blah blah blah
+  use Directory::Iterator::PP
+
+  my $list = Directory::Iterator::PP->new($directory);
+  while ($list->next) {
+    print $list->get, "\n";
+  }
 
 =head1 DESCRIPTION
 
-Stub documentation for Directory::Iterator::XS, created by h2xs. It looks like the
-author of the extension was negligent enough to leave the stub
-unedited.
+The module creates a list-like generator to recursively list files in a
+directory.  The directories are scanned as the list is consumed, so only the
+one directory handle and a list of directories to scan are stored in memory.
 
-Blah blah blah.
+=head2 METHODS
 
-=head2 EXPORT
+=over
 
-None by default.
+=item B<new>(I<DIRECTORY>)
 
+Create a new instance on the specified I<DIRECTORY>, which must be the name
+of an existing directory.
 
+=item B<next>
 
-=head1 SEE ALSO
+Advance to the next item.  Returns 1 if there is a next item, 0 otherwise.
 
-Mention other useful documentation such as the documentation of
-related modules or operating system documentation (such as man pages
-in UNIX), or any relevant external documentation such as RFCs or
-standards.
+=item B<get>
 
-If you have a mailing list set up for your module, mention it here.
+Get the current file (which must be set from a previous call to next).
 
-If you have a web site set up for your module, mention it here.
+=item B<prune>
+
+Prune the current diretory, so no more files are read from it.  When
+scanning the list of files, when you get a file from a directory that you
+aren't interested in, calling I<prune> will close that directory, to prevent
+spending time listing its contents.
+
+=back
 
 =head1 AUTHOR
 
-steve, E<lt>steve@E<gt>
+Steve Sanbeg
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2012 by steve
+Copyright (C) 2012 by Steve Sanbeg
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself, either Perl version 5.10.1 or,
@@ -66,3 +78,4 @@ at your option, any later version of Perl 5 you may have available.
 
 
 =cut
+
