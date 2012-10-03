@@ -11,7 +11,7 @@
 #define str2(arg) str1(arg)
 #define str1(arg) #arg
 
-std::string DirectoryIterator::separator_(str2(DIRECTORY_SEPARATOR));
+const std::string DirectoryIterator::separator_(str2(DIRECTORY_SEPARATOR));
 
 bool DirectoryIterator::scan () 
 {
@@ -85,7 +85,7 @@ bool DirectoryIterator::next ()
     }
   while( dirs_.size() ) 
     {
-      dir_ = dirs_.back();
+      dir_.swap(dirs_.back());
       dirs_.pop_back();
       dh_ = opendir(dir_.c_str());
       if (dh_ == NULL)

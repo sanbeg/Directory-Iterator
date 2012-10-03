@@ -12,7 +12,7 @@ private:
   DIR * dh_;
   std::string file_;
   std::string dir_;
-  static std::string separator_;
+  static const std::string separator_;
   
   bool scan();
   
