@@ -7,9 +7,10 @@
 # define DIRECTORY_SEPARATOR /
 #endif
 
-#define stringify(arg) #arg
+#define str2(arg) str1(arg)
+#define str1(arg) #arg
 
-std::string DirectoryIterator::separator_(stringify(DIRECTORY_SEPARATOR));
+std::string DirectoryIterator::separator_(str2(DIRECTORY_SEPARATOR));
 
 bool DirectoryIterator::scan () 
 {
