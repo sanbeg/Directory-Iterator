@@ -44,6 +44,14 @@ public:
   {
     if (dh_) closedir(dh_);
     dh_ = 0;
+
+    dir_ += seperator_;
+    while ( dirs_.back().compare(dir_, 0, dir_.size()) == 0) 
+      {
+	dirs_.pop_back();
+      }
+    dir_ = "";
+
   }
   
 };

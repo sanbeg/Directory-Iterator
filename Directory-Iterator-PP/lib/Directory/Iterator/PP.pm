@@ -10,7 +10,9 @@ sub new {
 
     $dir =~ s:/$::;
 
-    my %self = (file=>undef, dir=>$dir, dirs=>[]);
+    my $sep = File::Spec->join('x','x');
+    $sep =~ y/x//d;
+    my %self = (file=>undef, dir=>$dir, dirs=>[], ds=>$sep);
     opendir($self{dh},$dir) or croak "$dir: $!";
     bless \%self, $class;
 }
@@ -72,6 +74,10 @@ sub next {
 sub prune {
     my $self = shift;
     undef $self->{dh};
+
+    while ($self->{dirs}[-1] =~ m/$self->{dir}$self->{sep}/) {
+	pop @{ $self->{dirs} };
+    }
 }
 
 use overload '<>' => \&next, '""' => \&get;
