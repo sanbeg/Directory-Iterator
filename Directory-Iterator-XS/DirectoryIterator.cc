@@ -1,4 +1,5 @@
 #include "DirectoryIterator.hh"
+#include "perl_error.hh"
 #include <cstdio>
 #include <cstring>
 #include <sys/stat.h>
@@ -89,7 +90,7 @@ bool DirectoryIterator::next ()
       dh_ = opendir(dir_.c_str());
       if (dh_ == NULL)
 	{
-	  perror(dir_.c_str());
+	  perl_error::error(dir_.c_str());
 	}
       else
 	{
