@@ -12,6 +12,7 @@ private:
   DIR * dh_;
   std::string file_;
   std::string dir_;
+  static std::string separator_;
   
   bool scan();
   
@@ -35,7 +36,7 @@ public:
   
   std::string get() const
   {
-    return dir_ + "/" + file_;
+    return dir_ + separator_ + file_;
   }
 
   

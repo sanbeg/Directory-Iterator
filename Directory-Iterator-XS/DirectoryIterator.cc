@@ -3,6 +3,14 @@
 #include <cstring>
 #include <sys/stat.h>
 
+#ifndef DIRECTORY_SEPARATOR
+# define DIRECTORY_SEPARATOR /
+#endif
+
+#define stringify(arg) #arg
+
+std::string DirectoryIterator::separator_(stringify(DIRECTORY_SEPARATOR));
+
 bool DirectoryIterator::scan () 
 {
   struct dirent entry;
@@ -27,7 +35,7 @@ bool DirectoryIterator::scan ()
       switch (de->d_type) 
 	{
 	case DT_DIR:
-	  dirs_.push_back( dir_ + "/" + de->d_name );
+	  dirs_.push_back( dir_ + separator_ + de->d_name );
 	  break;
 	case DT_REG:
 	  {
@@ -38,7 +46,7 @@ bool DirectoryIterator::scan ()
 	case DT_UNKNOWN:
 #endif
 	  {
-	    std::string path = dir_ + "/" + de->d_name;
+	    std::string path = dir_ + separator_ + de->d_name;
 	    struct stat buf;
 	    stat(path.c_str(), &buf);
 	    if (S_ISDIR(buf.st_mode)) 
