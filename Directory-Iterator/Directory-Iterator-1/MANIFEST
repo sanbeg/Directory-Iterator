@@ -1,7 +1,0 @@
-Changes
-Makefile.PL
-MANIFEST
-README
-t/Directory-Iterator.t
-lib/Directory/Iterator.pm
-META.yml                                 Module meta-data (added by MakeMaker)

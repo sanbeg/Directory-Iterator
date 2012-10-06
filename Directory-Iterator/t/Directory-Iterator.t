@@ -19,8 +19,7 @@ my $obj = Directory::Iterator->new('t');
 
 # isa_ok($obj, 'Directory::Iterator::XS');
 
-foreach my $method ('get', 'next', 'prune') {
-  ok (Directory::Iterator->can($method), "can $method");
+foreach my $method ('get', 'next', 'prune', 'show_dotfiles') {
   ok ($obj->can($method), "can $method");
 }
 
