@@ -101,3 +101,19 @@ bool DirectoryIterator::next ()
   
 }
 
+  
+void DirectoryIterator::prune() 
+{
+  if (dh_) closedir(dh_);
+  dh_ = 0;
+  
+#if 0
+  dir_ += separator_;
+  while ( dirs_.back().compare(dir_, 0, dir_.size()) == 0) 
+    {
+      dirs_.pop_back();
+    }
+#endif
+  dir_ = "";
+  
+}

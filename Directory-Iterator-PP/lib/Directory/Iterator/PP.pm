@@ -4,6 +4,8 @@ use strict;
 use Carp;
 use File::Spec;
 
+our $VERSION = '1.000';
+
 sub new {
     my $class = shift;
     my $dir = shift;
@@ -62,7 +64,7 @@ sub next {
   
   while ( @{ $self->{dirs} } ) {
     $self->{dir} = pop @{ $self->{dirs} };
-    opendir( $self->{dh}, $self->{dir} ) or croak "$self->{dir}: $!";
+    opendir( $self->{dh}, $self->{dir} ) or carp "$self->{dir}: $!";
     if ( $self->{dh} ) {
       my $rv = $self->_scan;
       return $rv if defined $rv; 
@@ -74,10 +76,10 @@ sub next {
 sub prune {
     my $self = shift;
     undef $self->{dh};
-
-    while ($self->{dirs}[-1] =~ m/$self->{dir}$self->{sep}/) {
-	pop @{ $self->{dirs} };
-    }
+	
+    # while ($self->{dirs}[-1] =~ m/$self->{dir}$self->{sep}/) {
+	# 	pop @{ $self->{dirs} };
+    # }
 }
 
 use overload '<>' => \&next, '""' => \&get;

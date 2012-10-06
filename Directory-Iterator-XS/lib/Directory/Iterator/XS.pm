@@ -5,7 +5,7 @@ use strict;
 use warnings;
 
 
-our $VERSION = '0.01';
+our $VERSION = '1.000';
 
 use overload '<>' => sub{$_[0]->next};
 
@@ -21,7 +21,7 @@ __END__
 
 =head1 NAME
 
-Directory::Iterator::PP - Recursively list file contents
+Directory::Iterator::XS - Recursively list file contents
 
 =head1 SYNOPSIS
 
