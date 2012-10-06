@@ -1,12 +1,4 @@
-# Before `make install' is performed this script should be runnable with
-# `make test'. After `make install' it should work as `perl Directory-Iterator-XS.t'
-
-#########################
-
-# change 'tests => 1' to 'tests => last_test_to_print';
-
-#use Test;
-use Test::More;
+use Test::More tests=>16;
 use File::Spec;
 
 BEGIN { use_ok('Directory::Iterator::XS') };

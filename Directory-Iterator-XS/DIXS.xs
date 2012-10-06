@@ -12,7 +12,7 @@ MODULE = Directory::Iterator::XS		PACKAGE = Directory::Iterator::XS
 PROTOTYPES: disable
 
 DirectoryIterator *
-DirectoryIterator::new (const char * dir)
+DirectoryIterator::new (char * dir)
 
 void
 DirectoryIterator::show_dotfiles(bool arg)

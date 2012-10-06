@@ -1,11 +1,4 @@
-# Before `make install' is performed this script should be runnable with
-# `make test'. After `make install' it should work as `perl Directory-Iterator.t'
-
-#########################
-
-# change 'tests => 1' to 'tests => last_test_to_print';
-
-use Test::More;
+use Test::More tests=>5;
 
 use lib '../Directory-Iterator-PP/blib/lib';
 use lib '../Directory-Iterator-XS/blib/lib';
@@ -22,8 +15,5 @@ my $obj = Directory::Iterator->new('t');
 foreach my $method ('get', 'next', 'prune', 'show_dotfiles') {
   ok ($obj->can($method), "can $method");
 }
-
-done_testing;
-
 
 

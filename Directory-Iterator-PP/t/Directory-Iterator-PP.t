@@ -1,4 +1,4 @@
-use Test::More;
+use Test::More tests=>14;
 use File::Spec;
 
 BEGIN { use_ok('Directory::Iterator::PP') };
@@ -35,5 +35,5 @@ do {
   }
 };
 
-done_testing;
+
 
