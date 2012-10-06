@@ -62,6 +62,17 @@ scanning the list of files, when you get a file from a directory that you
 aren't interested in, calling I<prune> will close that directory, to prevent
 spending time listing its contents.
 
+As currently implemented, it's possible that some subdirectories could've
+been queued before the first file was seen, so it's not guaranteed that a
+single call to prune will always suffice. Its purpose is simply to be more
+efficient than continuing to read files from an unwanted directory.
+
+=item B<show_dotfiles>(I<ARG>) 
+
+If I<ARG> is true, hidden files & directories, those with names that begin
+with a I<.> will be processed as regular files.  By default, such files are
+skipped.
+
 =back
 
 =head1 AUTHOR
