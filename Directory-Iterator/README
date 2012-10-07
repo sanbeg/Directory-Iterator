@@ -1,16 +1,18 @@
-Directory-Iterator version 0.01
+Directory-Iterator version 1.000
 ===============================
 
-The README is used to introduce the module and provide instructions on
-how to install the module, any machine dependencies it may have (for
-example C compilers and installed libraries) and any other information
-that should be provided before the module is installed.
+This is a simple, efficient way to get a recursive list of all files under a
+specified directory.
 
-A README file is required for CPAN modules since CPAN extracts the
-README file from a module distribution so that people browsing the
-archive can use it get an idea of the modules uses. It is usually a
-good idea to provide version information here so that people can
-decide whether fixes for the module are worth downloading.
+It implements a typical iterator interface, making it simple to convert code
+that processes a list of files to use this instead.  The directory is read
+as the list is consumed, so memory overhead is minimal.
+
+This module simply loads the appropriate backend; either
+Directory::Iterator::PP or Directory::Iterator::XS.  With the
+pure-perl backend, the speed is equivalent to File::Find; the XS backend
+is a few times faster.
+
 
 INSTALLATION
 
@@ -25,13 +27,16 @@ DEPENDENCIES
 
 This module requires these other modules and libraries:
 
-  blah blah blah
+  Directory::Iterator::PP - The pure-perl backend
+
+  If available, the recommended Directory::Iterator::XS will be used instead
+  as it is a few times faster.
 
 COPYRIGHT AND LICENCE
 
 Put the correct copyright and licence information here.
 
-Copyright (C) 2012 by steve
+Copyright (C) 2012 by Steve Sanbeg
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself, either Perl version 5.10.1 or,

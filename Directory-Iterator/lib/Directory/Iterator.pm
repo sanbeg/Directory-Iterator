@@ -46,7 +46,7 @@ as the list is consumed, so memory overhead is minimal.
 
 This module simply loads the appropriate backend; either
 L<Directory::Iterator::PP> or L<Directory::Iterator::XS>.  With the
-pure-perl backend, the speed is equivalent to L<file::Find>; the XS backend
+pure-perl backend, the speed is equivalent to L<File::Find>; the XS backend
 is a few times faster.
 
 =head2 METHODS
