@@ -7,6 +7,7 @@ DIXS.xs
 DirectoryIterator.hh
 DirectoryIterator.cc
 perl_error.hh
+perl_error.cc
 t/Directory-Iterator-XS.t
 t/data/n/1
 t/data/n/2
