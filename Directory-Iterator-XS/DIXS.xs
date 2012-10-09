@@ -15,7 +15,7 @@ DirectoryIterator *
 DirectoryIterator::new (char * dir)
 
 void
-DirectoryIterator::show_dotfiles(bool arg)
+DirectoryIterator::show_dotfiles(int arg)
 
 string
 DirectoryIterator::next()
