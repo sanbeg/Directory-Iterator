@@ -15,7 +15,8 @@ DirectoryIterator *
 DirectoryIterator::new (char * dir)
 
 void
-DirectoryIterator::show_dotfiles(int arg)
+DirectoryIterator::show_dotfiles(arg)
+	bool arg = sv_true($arg);
 
 string
 DirectoryIterator::next()
