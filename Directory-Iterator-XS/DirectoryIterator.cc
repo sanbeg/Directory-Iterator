@@ -50,7 +50,7 @@ bool DirectoryIterator::scan ()
 	  {
 	    std::string path = dir_ + separator_ + de->d_name;
 	    struct stat buf;
-	    stat(path.c_str(), &buf);
+	    lstat(path.c_str(), &buf);
 	    if (S_ISDIR(buf.st_mode)) 
 	      {
 		dirs_.push_back( path );

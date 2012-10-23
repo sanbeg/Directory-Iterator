@@ -39,7 +39,8 @@ sub _scan {
 	    next if ( $de =~ m/^\./ );
 	}
 	my $path = File::Spec->join("$self->{dir}", $de);
-	if ( -d $path and ! -l _) {
+    return undef unless lstat($path);
+	if ( -d _ and ! -l _ ) {
 	    push @{$self->{dirs}}, $path;
 	}
 	elsif ( -f _ ) {
