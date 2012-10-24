@@ -90,7 +90,7 @@ __END__
 
 =head1 NAME
 
-Directory::Iterator::PP - Recursively list file contents
+Directory::Iterator::PP - Recursive directory listing; pure-Perl backend.
 
 =head1 SYNOPSIS
 
