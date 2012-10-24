@@ -21,7 +21,7 @@ __END__
 
 =head1 NAME
 
-Directory::Iterator::XS - Recursive directory listing; XS backend
+Directory::Iterator::XS - Recursive directory listing, fast XS backend
 
 =head1 SYNOPSIS
 
