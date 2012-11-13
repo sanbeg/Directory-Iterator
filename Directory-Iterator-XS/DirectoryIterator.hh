@@ -53,7 +53,8 @@ public:
   }
 
   void prune();
-  
+  std::string prune_directory();
+    
 };
 
   

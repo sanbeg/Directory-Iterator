@@ -133,3 +133,14 @@ void DirectoryIterator::prune()
   dir_ = "";
   
 }
+
+std::string DirectoryIterator::prune_directory() 
+{
+    std::string back;
+    if (not dirs_.empty()) 
+	{
+	    back.swap( dirs_.back() );
+	    dirs_.pop_back();
+	}
+    return back;
+}

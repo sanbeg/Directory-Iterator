@@ -1,4 +1,4 @@
-use Test::More tests=>30;
+use Test::More tests=>32;
 use File::Spec;
 
 BEGIN { use_ok('Directory::Iterator::XS') };
@@ -56,6 +56,20 @@ do {
   }
     ok( $save{ File::Spec->join('t','data','n') }, "found n" );
 };
+
+do {
+  my $list = Directory::Iterator::XS->new( File::Spec->join('t','data'));
+  $list->show_directories(1);
+
+  my $count=0;
+  while ( $list->next ) {
+	  ok ( $list->is_directory );
+	  $list->prune_directory;
+	  ++ $count;
+  }
+  is ($count, 1, 'found 1 file');
+}
+
 
 #done_testing;
 

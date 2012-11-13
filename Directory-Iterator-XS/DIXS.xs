@@ -41,5 +41,8 @@ DirectoryIterator::get()
 void
 DirectoryIterator::prune()
 
+string
+DirectoryIterator::prune_directory()
+
 void
 DirectoryIterator::DESTROY()
