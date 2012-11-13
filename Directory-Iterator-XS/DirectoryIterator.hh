@@ -25,6 +25,8 @@ public:
   {
     dh_ = 0;
     do_recurse_ = true;
+    show_dotfiles_ = false;
+    
     dirs_.push_back(dir);
   }
   ~DirectoryIterator() 
@@ -36,7 +38,7 @@ public:
  
   void show_dotfiles(bool arg) 
   {
-    show_dotfiles_ = arg? true : false;
+      show_dotfiles_ = arg? true : false;
   }
 
   void show_directories(bool arg) 
