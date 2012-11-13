@@ -1,4 +1,4 @@
-use Test::More tests=>32;
+use Test::More tests=>33;
 use File::Spec;
 
 BEGIN { use_ok('Directory::Iterator::XS') };
@@ -64,7 +64,7 @@ do {
   my $count=0;
   while ( $list->next ) {
 	  ok ( $list->is_directory );
-	  $list->prune_directory;
+	  is ($list->prune_directory, File::Spec->join('t','data', 'n'), 'pruned right dir');
 	  ++ $count;
   }
   is ($count, 1, 'found 1 file');

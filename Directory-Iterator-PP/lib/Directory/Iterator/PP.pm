@@ -25,6 +25,12 @@ sub show_dotfiles {
     $self->{show_dotfiles} = $arg? 1 : 0;
 }
 
+sub show_directories {
+    my $self = shift;
+    my $arg = shift;
+    $self->{show_directories} = $arg? 1 : 0;
+}
+
 sub get {
     my $self = shift;
     return $self->{file};
@@ -33,21 +39,35 @@ sub get {
 sub _scan {
     my $self = shift;
     while (my $de = readdir $self->{dh}) {
-	if ($self->{show_dotfiles}) {
-	    next if ($de eq '.' or $de eq '..');
-	} else {
-	    next if ( $de =~ m/^\./ );
+		if ($self->{show_dotfiles}) {
+			next if ($de eq '.' or $de eq '..');
+		} else {
+			next if ( $de =~ m/^\./ );
+		}
+		my $path = File::Spec->join("$self->{dir}", $de);
+		return undef unless lstat($path);
+		if ( -d _ and ! -l _ ) {
+			push @{$self->{dirs}}, $path;
+			if ($self->{show_directories}) {
+				$self->{is_dir} = 1;
+				return $self->{file} = $path;
+			}
+		}
+		elsif ( -f _ ) {
+			$self->{is_dir} = undef;
+			return $self->{file} = $path;
+		}
 	}
-	my $path = File::Spec->join("$self->{dir}", $de);
-    return undef unless lstat($path);
-	if ( -d _ and ! -l _ ) {
-	    push @{$self->{dirs}}, $path;
-	}
-	elsif ( -f _ ) {
-	    return $self->{file} = $path;
-	}
-    }
     return undef;
+}
+
+sub is_directory {
+	return $_[0]{is_dir};
+}
+
+sub prune_directory {
+	my $self = shift;
+	pop @{$self->{dirs}};
 }
 
 sub next {
