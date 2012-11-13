@@ -67,6 +67,9 @@ been queued before the first file was seen, so it's not guaranteed that a
 single call to prune will always suffice. Its purpose is simply to be more
 efficient than continuing to read files from an unwanted directory.
 
+To skip over a subdirectory with a single call, use B<show_directories> and
+B<prune_directory>.
+
 =item B<show_dotfiles>(I<ARG>) 
 
 If I<ARG> is true, hidden files & directories, those with names that begin
