@@ -37,7 +37,8 @@ bool DirectoryIterator::scan ()
       switch (de->d_type) 
 	{
 	case DT_DIR:
-	  dirs_.push_back( dir_ + separator_ + de->d_name );
+	  if ( do_recurse_ )
+	      dirs_.push_back( dir_ + separator_ + de->d_name );
 	  if (show_directories_) 
 	      {
 		  file_ = de->d_name;
@@ -61,7 +62,8 @@ bool DirectoryIterator::scan ()
 	    lstat(path.c_str(), &buf);
 	    if (S_ISDIR(buf.st_mode)) 
 	      {
-		dirs_.push_back( path );
+		if (do_recurse_)
+		    dirs_.push_back( path );
 
 		if (show_directories_) 
 		    {

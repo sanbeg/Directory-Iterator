@@ -14,7 +14,7 @@ sub new {
 
     my $sep = File::Spec->join('x','x');
     $sep =~ y/x//d;
-    my %self = (file=>undef, dir=>$dir, dirs=>[], ds=>$sep);
+    my %self = (file=>undef, dir=>$dir, dirs=>[], ds=>$sep, recurse=>1);
     opendir($self{dh},$dir) or croak "$dir: $!";
     bless \%self, $class;
 }
@@ -29,6 +29,12 @@ sub show_directories {
     my $self = shift;
     my $arg = shift;
     $self->{show_directories} = $arg? 1 : 0;
+}
+
+sub recurse {
+	my $self = shift;
+	my $arg = shift;
+	$self->{recurse} = $arg;
 }
 
 sub get {
@@ -47,7 +53,9 @@ sub _scan {
 		my $path = File::Spec->join("$self->{dir}", $de);
 		return undef unless lstat($path);
 		if ( -d _ and ! -l _ ) {
-			push @{$self->{dirs}}, $path;
+			push @{$self->{dirs}}, $path 
+			  if $self->{recurse};
+
 			if ($self->{show_directories}) {
 				$self->{is_dir} = 1;
 				return $self->{file} = $path;

@@ -22,6 +22,10 @@ void
 DirectoryIterator::show_directories(arg)
 	bool arg = sv_true($arg);
 
+void
+DirectoryIterator::recurse(arg)
+	bool arg = sv_true($arg);
+      
 bool
 DirectoryIterator::is_directory()
 

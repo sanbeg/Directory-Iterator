@@ -9,7 +9,8 @@ private:
   std::vector<std::string> dirs_;
   bool show_dotfiles_;
   bool show_directories_;
-
+  bool do_recurse_;
+    
   DIR * dh_;
   std::string file_;
   std::string dir_;
@@ -23,6 +24,7 @@ public:
   DirectoryIterator( std::string const & dir ) 
   {
     dh_ = 0;
+    do_recurse_ = true;
     dirs_.push_back(dir);
   }
   ~DirectoryIterator() 
@@ -42,6 +44,11 @@ public:
     show_directories_ = arg? true : false;
   }
   
+    void recurse(bool arg) 
+    {
+	do_recurse_ = arg? true : false;
+    }
+    
     bool is_directory() const
     {
 	return is_dir_;
