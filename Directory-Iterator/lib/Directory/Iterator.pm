@@ -19,7 +19,14 @@ BEGIN {
     }
 }
 
-
+sub new {
+	my ($class, $dir, %options) = @_;
+	my $self = $class->SUPER::new( $dir );
+	while (my ($method,$arg) = each %options) {
+		$self->$method($arg);
+	}
+	return $self;
+}
 1;
 __END__
 =head1 NAME
