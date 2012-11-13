@@ -39,3 +39,5 @@ do {
 	++ $count while <$list>;
 	is ($count, 2, 'found 2 files');
 };
+
+#my $list = Directory::Iterator->new('/tmp/', blah=>1);

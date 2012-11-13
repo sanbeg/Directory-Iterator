@@ -73,6 +73,27 @@ If I<ARG> is true, hidden files & directories, those with names that begin
 with a I<.> will be processed as regular files.  By default, such files are
 skipped.
 
+=item B<show_directories>(I<ARG>) 
+
+If I<ARG> is true, directories will be returned from the list, in addition
+to being queued to process their files.
+
+=item B<is_directory>
+
+Returns true if the most recently returned file entry is a directory; used
+to enable quickly differentiating directories form plain files.
+
+=item B<prune_directory>
+
+Removes the most recently queued directory, and returns the name of the
+removed directory.  This allows the module to quickly skip over
+subdirectories entirely, without ever opening them.
+
+=item B<recurse>(I<ARG>) 
+
+if I<ARG> is false, just look in the top-level directory; don't queue
+subdirectories for processing.
+
 =back
 
 =head1 AUTHOR
