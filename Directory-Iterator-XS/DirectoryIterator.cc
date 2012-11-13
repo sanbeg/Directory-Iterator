@@ -38,10 +38,18 @@ bool DirectoryIterator::scan ()
 	{
 	case DT_DIR:
 	  dirs_.push_back( dir_ + separator_ + de->d_name );
+	  if (show_directories_) 
+	      {
+		  file_ = de->d_name;
+		  is_dir_ = true;
+		  return true;
+	      }
+	  
 	  break;
 	case DT_REG:
 	  {
 	    file_ = de->d_name;
+	    is_dir_ = false;
 	    return true;
 	  }
 	  
@@ -54,10 +62,18 @@ bool DirectoryIterator::scan ()
 	    if (S_ISDIR(buf.st_mode)) 
 	      {
 		dirs_.push_back( path );
+
+		if (show_directories_) 
+		    {
+			file_ = de->d_name;
+			is_dir_ = true;
+			return true;
+		    }
 	      }
 	    else if (S_ISREG(buf.st_mode)) 
 	      {
 		file_ = de->d_name;
+		is_dir_ = false;
 		return true;
 	      }
 	  }

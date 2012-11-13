@@ -8,12 +8,15 @@ class DirectoryIterator
 private:
   std::vector<std::string> dirs_;
   bool show_dotfiles_;
-  
+  bool show_directories_;
+
   DIR * dh_;
   std::string file_;
   std::string dir_;
   static const std::string separator_;
   
+  bool is_dir_;
+    
   bool scan();
   
 public:
@@ -33,7 +36,17 @@ public:
   {
     show_dotfiles_ = arg? true : false;
   }
+
+  void show_directories(bool arg) 
+  {
+    show_directories_ = arg? true : false;
+  }
   
+    bool is_directory() const
+    {
+	return is_dir_;
+    }
+    
   std::string get() const
   {
     return dir_ + separator_ + file_;

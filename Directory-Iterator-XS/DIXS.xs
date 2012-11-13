@@ -18,6 +18,13 @@ void
 DirectoryIterator::show_dotfiles(arg)
 	bool arg = sv_true($arg);
 
+void
+DirectoryIterator::show_directories(arg)
+	bool arg = sv_true($arg);
+
+bool
+DirectoryIterator::is_directory()
+
 string
 DirectoryIterator::next()
 CODE:
