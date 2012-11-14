@@ -10,9 +10,9 @@ sub new {
     my $class = shift;
     my $dir = shift;
 
-    $dir =~ s:/$::;
-
     my $sep = File::Spec->join('x','x');
+    $dir =~ s:$sep$::;
+
     $sep =~ y/x//d;
     my %self = (file=>undef, dir=>$dir, dirs=>[], ds=>$sep, recurse=>1);
     opendir($self{dh},$dir) or croak "$dir: $!";
