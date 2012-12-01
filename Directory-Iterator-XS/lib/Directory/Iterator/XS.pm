@@ -92,7 +92,7 @@ Removes the most recently queued directory, and returns the name of the
 removed directory.  This allows the module to quickly skip over
 subdirectories entirely, without ever opening them.
 
-=item B<recurse>(I<ARG>) 
+=item B<recursive>(I<ARG>) 
 
 if I<ARG> is false, just look in the top-level directory; don't queue
 subdirectories for processing.
