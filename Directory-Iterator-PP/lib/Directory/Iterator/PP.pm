@@ -10,11 +10,11 @@ sub new {
     my $class = shift;
     my $dir = shift;
 
-    $dir =~ s:/$::;
-
     my $sep = File::Spec->join('x','x');
+    $dir =~ s:$sep$::;
+
     $sep =~ y/x//d;
-    my %self = (file=>undef, dir=>$dir, dirs=>[], ds=>$sep);
+    my %self = (file=>undef, dir=>$dir, dirs=>[], ds=>$sep, recurse=>1);
     opendir($self{dh},$dir) or croak "$dir: $!";
     bless \%self, $class;
 }
@@ -25,6 +25,18 @@ sub show_dotfiles {
     $self->{show_dotfiles} = $arg? 1 : 0;
 }
 
+sub show_directories {
+    my $self = shift;
+    my $arg = shift;
+    $self->{show_directories} = $arg? 1 : 0;
+}
+
+sub recurse {
+	my $self = shift;
+	my $arg = shift;
+	$self->{recurse} = $arg;
+}
+
 sub get {
     my $self = shift;
     return $self->{file};
@@ -33,21 +45,37 @@ sub get {
 sub _scan {
     my $self = shift;
     while (my $de = readdir $self->{dh}) {
-	if ($self->{show_dotfiles}) {
-	    next if ($de eq '.' or $de eq '..');
-	} else {
-	    next if ( $de =~ m/^\./ );
+		if ($self->{show_dotfiles}) {
+			next if ($de eq '.' or $de eq '..');
+		} else {
+			next if ( $de =~ m/^\./ );
+		}
+		my $path = File::Spec->join("$self->{dir}", $de);
+		return undef unless lstat($path);
+		if ( -d _ and ! -l _ ) {
+			push @{$self->{dirs}}, $path 
+			  if $self->{recurse};
+
+			if ($self->{show_directories}) {
+				$self->{is_dir} = 1;
+				return $self->{file} = $path;
+			}
+		}
+		elsif ( -f _ ) {
+			$self->{is_dir} = undef;
+			return $self->{file} = $path;
+		}
 	}
-	my $path = File::Spec->join("$self->{dir}", $de);
-    return undef unless lstat($path);
-	if ( -d _ and ! -l _ ) {
-	    push @{$self->{dirs}}, $path;
-	}
-	elsif ( -f _ ) {
-	    return $self->{file} = $path;
-	}
-    }
     return undef;
+}
+
+sub is_directory {
+	return $_[0]{is_dir};
+}
+
+sub prune_directory {
+	my $self = shift;
+	pop @{$self->{dirs}};
 }
 
 sub next {
@@ -136,11 +164,35 @@ been queued before the first file was seen, so it's not guaranteed that a
 single call to prune will always suffice. Its purpose is simply to be more
 efficient than continuing to read files from an unwanted directory.
 
+To skip over a subdirectory with a single call, use B<show_directories> and
+B<prune_directory>.
+
 =item B<show_dotfiles>(I<ARG>) 
 
 If I<ARG> is true, hidden files & directories, those with names that begin
 with a I<.> will be processed as regular files.  By default, such files are
 skipped.
+
+=item B<show_directories>(I<ARG>) 
+
+If I<ARG> is true, directories will be returned from the list, in addition
+to being queued to process their files.
+
+=item B<is_directory>
+
+Returns true if the most recently returned file entry is a directory; used
+to enable quickly differentiating directories form plain files.
+
+=item B<prune_directory>
+
+Removes the most recently queued directory, and returns the name of the
+removed directory.  This allows the module to quickly skip over
+subdirectories entirely, without ever opening them.
+
+=item B<recurse>(I<ARG>) 
+
+if I<ARG> is false, just look in the top-level directory; don't queue
+subdirectories for processing.
 
 =back
 

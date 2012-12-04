@@ -37,11 +37,20 @@ bool DirectoryIterator::scan ()
       switch (de->d_type) 
 	{
 	case DT_DIR:
-	  dirs_.push_back( dir_ + separator_ + de->d_name );
+	  if ( do_recurse_ )
+	      dirs_.push_back( dir_ + separator_ + de->d_name );
+	  if (show_directories_) 
+	      {
+		  file_ = de->d_name;
+		  is_dir_ = true;
+		  return true;
+	      }
+	  
 	  break;
 	case DT_REG:
 	  {
 	    file_ = de->d_name;
+	    is_dir_ = false;
 	    return true;
 	  }
 	  
@@ -53,11 +62,20 @@ bool DirectoryIterator::scan ()
 	    lstat(path.c_str(), &buf);
 	    if (S_ISDIR(buf.st_mode)) 
 	      {
-		dirs_.push_back( path );
+		if (do_recurse_)
+		    dirs_.push_back( path );
+
+		if (show_directories_) 
+		    {
+			file_ = de->d_name;
+			is_dir_ = true;
+			return true;
+		    }
 	      }
 	    else if (S_ISREG(buf.st_mode)) 
 	      {
 		file_ = de->d_name;
+		is_dir_ = false;
 		return true;
 	      }
 	  }
@@ -116,4 +134,15 @@ void DirectoryIterator::prune()
 #endif
   dir_ = "";
   
+}
+
+std::string DirectoryIterator::prune_directory() 
+{
+    std::string back;
+    if (not dirs_.empty()) 
+	{
+	    back.swap( dirs_.back() );
+	    dirs_.pop_back();
+	}
+    return back;
 }
