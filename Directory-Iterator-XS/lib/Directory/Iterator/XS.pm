@@ -5,7 +5,7 @@ use strict;
 use warnings;
 
 
-our $VERSION = '1.000002';
+our $VERSION = '1.001000';
 
 use overload '<>' => sub{$_[0]->next};
 
@@ -25,9 +25,9 @@ Directory::Iterator::XS - Recursive directory listing, fast XS backend
 
 =head1 SYNOPSIS
 
-  use Directory::Iterator::PP
+  use Directory::Iterator::XS
 
-  my $list = Directory::Iterator::PP->new($directory);
+  my $list = Directory::Iterator::XS->new($directory);
   while ($list->next) {
     print $list->get, "\n";
   }
