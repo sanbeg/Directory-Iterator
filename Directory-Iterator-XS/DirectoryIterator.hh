@@ -46,7 +46,7 @@ public:
     show_directories_ = arg? true : false;
   }
   
-    void recurse(bool arg) 
+    void recursive(bool arg) 
     {
 	do_recurse_ = arg? true : false;
     }
