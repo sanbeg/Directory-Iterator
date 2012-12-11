@@ -1,5 +1,6 @@
 use Test::More tests=>31;
 use File::Spec;
+use strict;
 
 BEGIN { use_ok('Directory::Iterator::PP') };
 
@@ -41,10 +42,12 @@ do {
 
   my $n_dirs;
   my %save;
+
+  my $prefix = File::Spec->join('t','data','n');
   for my $i (1 .. 4) {
     ok( $list->next, "got $i" );
     $save{ $list->get } = $i;
-    like($list->get, qr:t/data/n:);
+    like($list->get, qr/$prefix/);
 	++ $n_dirs if $list->is_directory;
   }
   is ($n_dirs, 1, 'found 1 dir');
