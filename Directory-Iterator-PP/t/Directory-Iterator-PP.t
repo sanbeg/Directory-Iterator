@@ -43,7 +43,7 @@ do {
   my $n_dirs;
   my %save;
 
-  my $prefix = File::Spec->join('t','data','n');
+  my $prefix = quotemeta(File::Spec->join('t','data','n'));
   for my $i (1 .. 4) {
     ok( $list->next, "got $i" );
     $save{ $list->get } = $i;
