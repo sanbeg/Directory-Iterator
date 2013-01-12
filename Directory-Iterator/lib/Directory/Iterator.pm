@@ -5,7 +5,7 @@ use strict;
 use warnings;
 
 our @ISA;
-our $VERSION = '1.000';
+our $VERSION = '1.001';
 
 BEGIN {
 
@@ -51,12 +51,13 @@ It implements a typical iterator interface, making it simple to convert code
 that processes a list of files to use this instead.  The directory is read
 as the list is consumed, so memory overhead is minimal.
 
-This module loads the appropriate backend; either
-L<Directory::Iterator::PP> or L<Directory::Iterator::XS>.  With the
-pure-perl backend, the speed is equivalent to L<File::Find>; the XS backend
-is a few times faster.
+This module loads the appropriate backend; either L<Directory::Iterator::PP>
+or L<Directory::Iterator::XS>.  With the pure-perl backend, the speed is
+equivalent to L<File::Find>; the XS backend is a few times faster,
+particularly on systems which implement _DIRENT_HAVE_D_TYPE (mainly Linux and
+BSD).
 
-As a bit of syntactic sugar, the module also implements a constructor witch
+As a bit of syntactic sugar, the module also implements a constructor which
 forwards options to the backend; i.e.
 
  my $list = Directory::Iterator->new($dir, show_dotfiles=>1);
@@ -67,6 +68,8 @@ Is equivalent to
  $list->show_dotfiles(1);
 
 =head2 METHODS
+
+Currently, both back ends support the following options:
 
 =over
 
@@ -120,7 +123,7 @@ subdirectories entirely, without ever opening them.
 
 =item B<recursive>(I<ARG>) 
 
-if I<ARG> is false, just look in the top-level directory; don't queue
+If I<ARG> is false, just look in the top-level directory; don't queue
 subdirectories for processing.
 
 =back
@@ -130,6 +133,10 @@ subdirectories for processing.
 None by default.
 
 =head1 SEE ALSO
+
+L<Directory::Iterator::PP>
+
+L<Directory::Iterator::XS>
 
 L<File::Find>
 
