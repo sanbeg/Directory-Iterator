@@ -6,18 +6,22 @@ tmp=test-tmp-$$
 
 mkdir $tmp
 
-for type in '-PP' '-XS'
+for type in '-PP' '-XS' ''
 do
     module=Directory-Iterator$type
-    tarball=`ls -t $module-*.tar.gz | head -1`
+    tarball=`ls -t $module-[0-9]*.tar.gz | head -1`
     version=`basename $tarball .tar.gz`
 
     if [ "$tarball" != "" ]
     then
-	echo $version
+	echo "=== $version ==="
 	tar -C $tmp -xzp -f $tarball
 
-	cd $tmp/$version || exit 1
+	#cd $tmp/$version || exit 1
+	cd $tmp || exit 1
+	ln -s $version $module
+	cd $version || exit 1
+
 	perl Makefile.PL
 	make test
 	cd ../..
