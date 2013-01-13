@@ -23,6 +23,7 @@ do
 	cd $version || exit 1
 
 	perl Makefile.PL
+	make > /dev/null 2>&1
 	make test
 	cd ../..
     else
