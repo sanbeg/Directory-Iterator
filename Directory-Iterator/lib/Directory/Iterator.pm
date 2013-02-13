@@ -103,7 +103,6 @@ If I<ARG> is true, hidden files & directories, those with names that begin
 with a I<.> will be processed as regular files.  By default, such files are
 skipped.
 
-=back
 
 =item B<show_directories>(I<ARG>) 
 
