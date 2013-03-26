@@ -1,4 +1,4 @@
-use Test::More tests=>31;
+use Test::More tests=>35;
 use File::Spec;
 use strict;
 
@@ -69,4 +69,21 @@ do {
 	  ++ $count;
   }
   is ($count, 1, 'found 1 file');
-}
+};
+
+do {
+  my $list = Directory::Iterator::PP->new( File::Spec->join('t','data','n'));
+  $list->show_dotfiles(1);
+
+  my %save;
+  for my $i (1 .. 4) {
+    ok( $list->next, "got $i" );
+    $save{ $list->get } = $i;
+    like($list->get, qr:t/data/n:);
+  }
+  ok(not(defined($list->next)), "no more files");
+  for my $i (1..3, '.dot') {
+    ok( $save{ File::Spec->join('t','data','n',$i) }, "found $i" );
+  }
+
+};
