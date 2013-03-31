@@ -1,4 +1,4 @@
-use Test::More tests=>57;
+use Test::More tests=>70;
 use File::Spec;
 use strict;
 
@@ -24,7 +24,28 @@ do {
   for my $i (1..3) {
     ok( $save{ File::Spec->join('t','data','n',$i) }, "found $i" );
   }
-    ok( $save{ File::Spec->join('t','data','n','n2', 4) }, "found 4" );
+  ok( $save{ File::Spec->join('t','data','n','n2', 4) }, "found 4" );
+};
+
+do {
+  #default options, explicit method calls
+  my $list = MODULE->new( File::Spec->join('t','data','n'));
+  $list->show_directories(0);
+  $list->show_dotfiles(0);
+
+  my %save;
+  my $prefix = quotemeta(File::Spec->join('t','data','n'));
+
+  for my $i (1 .. 4) {
+    ok( $list->next, "got $i" );
+    $save{ $list->get } = $i;
+    like($list->get, qr/$prefix/, "File $i matched prefix");
+  }
+  ok(not(defined($list->next)), "no more files");
+  for my $i (1..3) {
+    ok( $save{ File::Spec->join('t','data','n',$i) }, "found $i" );
+  }
+  ok( $save{ File::Spec->join('t','data','n','n2', 4) }, "found 4" );
 };
 
 do {
@@ -95,7 +116,7 @@ do {
 };
 
 do {
-  #show_directories + prune
+  #show_directories + prune_directory
   my $list = MODULE->new( File::Spec->join('t','data'));
   $list->show_directories(1);
 
@@ -107,3 +128,4 @@ do {
   }
   is ($count, 1, 'found 1 file');
 };
+
