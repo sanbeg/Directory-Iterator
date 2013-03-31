@@ -1,4 +1,4 @@
-use Test::More tests=>70;
+use Test::More tests=>71;
 use File::Spec;
 use strict;
 
@@ -117,15 +117,35 @@ do {
 
 do {
   #show_directories + prune_directory
-  my $list = MODULE->new( File::Spec->join('t','data'));
+  my $list = MODULE->new( File::Spec->join('t','data', 'n'));
   $list->show_directories(1);
 
   my $count=0;
   while ( $list->next ) {
-	  ok ( $list->is_directory );
-	  is ($list->prune_directory, File::Spec->join('t','data', 'n'), 'pruned right dir');
+	  next unless $list->is_directory;
+	  ok( $list->is_directory , "Is directory");
+	  is (
+	    $list->prune_directory, 
+	    File::Spec->join('t','data', 'n', 'n2'),
+	    'pruned right dir'
+	   );
 	  ++ $count;
   }
   is ($count, 1, 'found 1 file');
+};
+
+do {
+  #show_directories + prune
+  my $list = MODULE->new( File::Spec->join('t','data', 'n'));
+
+  my $count=0;
+  while ( $list->next ) {
+    if ( $list->get eq File::Spec->join('t','data', 'n', 'n2', 4)) {
+      $list->prune;
+      next;
+    }
+    ++ $count;
+  }
+  is ($count, 3, 'found 3 files after pruning');
 };
 
