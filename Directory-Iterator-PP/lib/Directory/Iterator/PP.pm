@@ -34,7 +34,7 @@ sub show_directories {
 sub recursive {
 	my $self = shift;
 	my $arg = shift;
-	$self->{recursive} = $arg;
+	$self->{recurse} = $arg;
 }
 
 sub get {

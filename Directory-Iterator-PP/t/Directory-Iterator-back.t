@@ -1,8 +1,10 @@
-use Test::More tests=>46;
+use Test::More tests=>48;
 use File::Spec;
 use strict;
 
-sub MODULE() {'Directory::Iterator::XS'};
+use lib 't';
+use BackendModule;
+
 BEGIN { use_ok(MODULE) };
 
 do {
@@ -56,6 +58,16 @@ do {
     ok( $save{ File::Spec->join('t','data','n',$i) }, "found $i" );
   }
 
+};
+
+do {
+  #not recursive
+  my $list = MODULE->new( File::Spec->join('t','data'));
+  $list->recursive(0);
+  $list->show_directories(1);
+
+  ok ( $list->next, "got the dir" );
+  ok(not(defined($list->next)), "no more files without recursive");
 };
 
 do {
