@@ -9,4 +9,6 @@ t/BackendModule.pm
 t/data/n/1
 t/data/n/2
 t/data/n/3
+t/data/n/n2/4
+t/data/n/.dot
 META.yml                                 Module meta-data (added by MakeMaker)

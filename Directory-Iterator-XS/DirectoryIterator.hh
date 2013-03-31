@@ -26,6 +26,7 @@ public:
     dh_ = 0;
     do_recurse_ = true;
     show_dotfiles_ = false;
+    show_directories_ = false;
     
     dirs_.push_back(dir);
   }

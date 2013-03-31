@@ -1,4 +1,4 @@
-use Test::More tests=>48;
+use Test::More tests=>57;
 use File::Spec;
 use strict;
 
@@ -15,7 +15,7 @@ do {
   my %save;
   my $prefix = quotemeta(File::Spec->join('t','data','n'));
 
-  for my $i (1 .. 3) {
+  for my $i (1 .. 4) {
     ok( $list->next, "got $i" );
     $save{ $list->get } = $i;
     like($list->get, qr/$prefix/, "File $i matched prefix");
@@ -24,6 +24,7 @@ do {
   for my $i (1..3) {
     ok( $save{ File::Spec->join('t','data','n',$i) }, "found $i" );
   }
+    ok( $save{ File::Spec->join('t','data','n','n2', 4) }, "found 4" );
 };
 
 do {
@@ -36,7 +37,7 @@ do {
   while ($file = <$list>) {
     $save{ $file } = ++$i1;
   }
-  is( keys(%save), 3, "Got 3 files from iterator" );
+  is( keys(%save), 4, "Got 4 files from iterator" );
   for my $i (1..3) {
     ok( $save{ File::Spec->join('t','data','n',$i) }, "found $i" );
   }
@@ -48,7 +49,7 @@ do {
   $list->show_dotfiles(1);
 
   my %save;
-  for my $i (1 .. 4) {
+  for my $i (1 .. 5) {
     ok( $list->next, "got $i" );
     $save{ $list->get } = $i;
     like($list->get, qr:t/data/n:);
@@ -79,13 +80,13 @@ do {
   my %save;
   my $prefix = quotemeta(File::Spec->join('t','data','n'));
 
-  for my $i (1 .. 4) {
+  for my $i (1 .. 6) {
     ok( $list->next, "got $i" );
     $save{ $list->get } = $i;
     like($list->get, qr/$prefix/, "File $i matched prefix");
     ++ $n_dirs if $list->is_directory;
   }
-  is ($n_dirs, 1, 'found 1 dir');
+  is ($n_dirs, 2, 'found 2 dirs');
   ok(not(defined($list->next)), "no more files");
   for my $i (1..3) {
     ok( $save{ File::Spec->join('t','data','n',$i) }, "found $i" );
