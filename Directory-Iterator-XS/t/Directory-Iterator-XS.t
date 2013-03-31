@@ -11,10 +11,12 @@ do {
   isa_ok($list, MODULE);
 
   my %save;
+  my $prefix = quotemeta(File::Spec->join('t','data','n'));
+
   for my $i (1 .. 3) {
     ok( $list->next, "got $i" );
     $save{ $list->get } = $i;
-    like($list->get, qr:t/data/n:);
+    like($list->get, qr/$prefix/, "File $i matched prefix");
   }
   ok(not(defined($list->next)), "no more files");
   for my $i (1..3) {
@@ -63,11 +65,13 @@ do {
 
   my $n_dirs;
   my %save;
+  my $prefix = quotemeta(File::Spec->join('t','data','n'));
+
   for my $i (1 .. 4) {
     ok( $list->next, "got $i" );
     $save{ $list->get } = $i;
-    like($list->get, qr:t/data/n:);
-	++ $n_dirs if $list->is_directory;
+    like($list->get, qr/$prefix/, "File $i matched prefix");
+    ++ $n_dirs if $list->is_directory;
   }
   is ($n_dirs, 1, 'found 1 dir');
   ok(not(defined($list->next)), "no more files");
@@ -90,7 +94,3 @@ do {
   }
   is ($count, 1, 'found 1 file');
 };
-
-
-
-
