@@ -1,11 +1,14 @@
 use Test::More tests=>46;
 use File::Spec;
+use strict;
 
-BEGIN { use_ok('Directory::Iterator::XS') };
+sub MODULE() {'Directory::Iterator::XS'};
+BEGIN { use_ok(MODULE) };
 
 do {
-  my $list = Directory::Iterator::XS->new( File::Spec->join('t','data','n'));
-  isa_ok($list, 'Directory::Iterator::XS');
+  #No options, explicit method calls
+  my $list = MODULE->new( File::Spec->join('t','data','n'));
+  isa_ok($list, MODULE);
 
   my %save;
   for my $i (1 .. 3) {
@@ -17,11 +20,27 @@ do {
   for my $i (1..3) {
     ok( $save{ File::Spec->join('t','data','n',$i) }, "found $i" );
   }
-
 };
 
 do {
-  my $list = Directory::Iterator::XS->new( File::Spec->join('t','data','n'));
+  #No options, overloaded operator
+  my $list = MODULE->new( File::Spec->join('t','data','n'));
+
+  my %save;
+  my $file;
+  my $i1=0;
+  while ($file = <$list>) {
+    $save{ $file } = ++$i1;
+  }
+  is( keys(%save), 3, "Got 3 files from iterator" );
+  for my $i (1..3) {
+    ok( $save{ File::Spec->join('t','data','n',$i) }, "found $i" );
+  }
+};
+
+do {
+  #show_dotfiles
+  my $list = MODULE->new( File::Spec->join('t','data','n'));
   $list->show_dotfiles(1);
 
   my %save;
@@ -37,25 +56,9 @@ do {
 
 };
 
-
 do {
-
-  my $list = Directory::Iterator::XS->new( File::Spec->join('t','data','n'));
-
-  my %save;
-  my $file;
-  my $i1=0;
-  while ($file = <$list>) {
-    $save{ $file } = ++$i1;
-  }
-  is( keys(%save), 3, "Got 3 files from iterator" );
-  for my $i (1..3) {
-    ok( $save{ File::Spec->join('t','data','n',$i) }, "found $i" );
-  }
-};
-
-do {
-  my $list = Directory::Iterator::XS->new( File::Spec->join('t','data'));
+  #show_directories, no prune
+  my $list = MODULE->new( File::Spec->join('t','data'));
   $list->show_directories(1);
 
   my $n_dirs;
@@ -75,7 +78,8 @@ do {
 };
 
 do {
-  my $list = Directory::Iterator::XS->new( File::Spec->join('t','data'));
+  #show_directories + prune
+  my $list = MODULE->new( File::Spec->join('t','data'));
   $list->show_directories(1);
 
   my $count=0;
@@ -85,10 +89,7 @@ do {
 	  ++ $count;
   }
   is ($count, 1, 'found 1 file');
-}
-
-
-#done_testing;
+};
 
 
 
