@@ -7,3 +7,6 @@ pm_to_blib
 *.so
 *.bs
 *.tar.gz
+*.gcov
+*.gcda
+*.gcno
