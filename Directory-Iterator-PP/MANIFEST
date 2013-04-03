@@ -2,7 +2,6 @@ Changes
 Makefile.PL
 MANIFEST
 README
-t/Directory-Iterator-PP.t
 lib/Directory/Iterator/PP.pm
 t/Directory-Iterator-back.t
 t/BackendModule.pm
