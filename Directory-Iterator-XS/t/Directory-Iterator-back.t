@@ -66,6 +66,7 @@ do {
 
 do {
   #show_dotfiles
+  my $prefix = quotemeta(File::Spec->join('t','data','n'));
   my $list = MODULE->new( File::Spec->join('t','data','n'));
   $list->show_dotfiles(1);
 
@@ -73,7 +74,7 @@ do {
   for my $i (1 .. 5) {
     ok( $list->next, "got $i" );
     $save{ $list->get } = $i;
-    like($list->get, qr:t/data/n:);
+    like($list->get, qr/$prefix/, "File $i matched prefix");
   }
   ok(not(defined($list->next)), "no more files");
   for my $i (1..3, '.dot') {
