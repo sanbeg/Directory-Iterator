@@ -4,7 +4,7 @@ use strict;
 use Carp;
 use File::Spec;
 
-our $VERSION = '1.001003';
+our $VERSION = '1.001004';
 
 sub new {
     my $class = shift;
