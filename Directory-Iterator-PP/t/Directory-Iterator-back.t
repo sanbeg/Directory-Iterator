@@ -10,18 +10,18 @@ use Test::Directory;
 
 BEGIN { use_ok(MODULE) };
 
-my $tdn = Test::Directory->new( File::Spec->join('t','data','n') );
-$tdn->mkdir('n2');
-$tdn->touch(1..3, '.dot', 'n2/4');
+my $test_dir = Test::Directory->new( 't/data/n' );
+$test_dir->mkdir('n2');
+$test_dir->touch(1..3, '.dot', 'n2/4');
 
 
 do {
   #No options, explicit method calls
-  my $list = MODULE->new( File::Spec->join('t','data','n'));
+  my $list = MODULE->new( $test_dir->path );
   isa_ok($list, MODULE);
 
   my %save;
-  my $prefix = quotemeta(File::Spec->join('t','data','n'));
+  my $prefix = quotemeta( $test_dir->path );
 
   for my $i (1 .. 4) {
     ok( $list->next, "got $i" );
@@ -30,19 +30,19 @@ do {
   }
   ok(not(defined($list->next)), "no more files");
   for my $i (1..3) {
-    ok( $save{ $tdn->path($i) }, "found $i" );
+    ok( $save{ $test_dir->path($i) }, "found $i" );
   }
-  ok( $save{ $tdn->path('n2/4') }, "found 4" );
+  ok( $save{ $test_dir->path('n2/4') }, "found 4" );
 };
 
 do {
   #default options, explicit method calls
-  my $list = MODULE->new( File::Spec->join('t','data','n'));
+  my $list = MODULE->new( $test_dir->path );
   $list->show_directories(0);
   $list->show_dotfiles(0);
 
   my %save;
-  my $prefix = quotemeta(File::Spec->join('t','data','n'));
+  my $prefix = quotemeta( $test_dir->path );
 
   for my $i (1 .. 4) {
     ok( $list->next, "got $i" );
@@ -51,14 +51,14 @@ do {
   }
   ok(not(defined($list->next)), "no more files");
   for my $i (1..3) {
-    ok( $save{ $tdn->path($i) }, "found $i" );
+    ok( $save{ $test_dir->path($i) }, "found $i" );
   }
-  ok( $save{ $tdn->path('n2/4') }, "found 4" );
+  ok( $save{ $test_dir->path('n2/4') }, "found 4" );
 };
 
 do {
   #No options, overloaded operator
-  my $list = MODULE->new( File::Spec->join('t','data','n'));
+  my $list = MODULE->new( $test_dir->path );
 
   my %save;
   my $file;
@@ -68,14 +68,14 @@ do {
   }
   is( keys(%save), 4, "Got 4 files from iterator" );
   for my $i (1..3) {
-    ok( $save{ $tdn->path($i) }, "found $i" );
+    ok( $save{ $test_dir->path($i) }, "found $i" );
   }
 };
 
 do {
   #show_dotfiles
-  my $prefix = quotemeta(File::Spec->join('t','data','n'));
-  my $list = MODULE->new( File::Spec->join('t','data','n'));
+  my $prefix = quotemeta( $test_dir->path );
+  my $list = MODULE->new( $test_dir->path );
   $list->show_dotfiles(1);
 
   my %save;
@@ -86,7 +86,7 @@ do {
   }
   ok(not(defined($list->next)), "no more files");
   for my $i (1..3, '.dot') {
-    ok( $save{ $tdn->path($i) }, "found $i" );
+    ok( $save{ $test_dir->path($i) }, "found $i" );
   }
 
 };
@@ -108,7 +108,7 @@ do {
 
   my $n_dirs;
   my %save;
-  my $prefix = quotemeta(File::Spec->join('t','data','n'));
+  my $prefix = quotemeta( $test_dir->path );
 
   for my $i (1 .. 6) {
     ok( $list->next, "got $i" );
@@ -119,21 +119,21 @@ do {
   is ($n_dirs, 2, 'found 2 dirs');
   ok(not(defined($list->next)), "no more files");
   for my $i (1..3) {
-    ok( $save{ $tdn->path($i) }, "found $i" );
+    ok( $save{ $test_dir->path($i) }, "found $i" );
   }
-    ok( $save{ File::Spec->join('t','data','n') }, "found n" );
+    ok( $save{ $test_dir->path }, "found n" );
 };
 
 do {
   #show_directories + prune_directory
-  my $list = MODULE->new( File::Spec->join('t','data', 'n'));
+  my $list = MODULE->new( $test_dir->path );
   $list->show_directories(1);
 
   my $count=0;
   while ( $list->next ) {
 	  next unless $list->is_directory;
 	  ok( $list->is_directory , "Is directory");
-	  is ($list->prune_directory, $tdn->path('n2'), 'pruned right dir');
+	  is ($list->prune_directory, $test_dir->path('n2'), 'pruned right dir');
 	  ++ $count;
   }
   is ($count, 1, 'found 1 file');
@@ -141,11 +141,11 @@ do {
 
 do {
   #show_directories + prune
-  my $list = MODULE->new( File::Spec->join('t','data', 'n'));
+  my $list = MODULE->new( $test_dir->path );
 
   my $count=0;
   while ( $list->next ) {
-    if ( $list->get eq $tdn->path('n2/4')) {
+    if ( $list->get eq $test_dir->path('n2/4')) {
       $list->prune;
       next;
     }
