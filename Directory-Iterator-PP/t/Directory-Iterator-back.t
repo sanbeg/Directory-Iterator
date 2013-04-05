@@ -5,7 +5,15 @@ use strict;
 use lib 't';
 use BackendModule;
 
+use lib '../../Test-Directory/lib';
+use Test::Directory;
+
 BEGIN { use_ok(MODULE) };
+
+my $tdn = Test::Directory->new( File::Spec->join('t','data','n') );
+$tdn->mkdir('n2');
+$tdn->touch(1..3, '.dot', 'n2/4');
+
 
 do {
   #No options, explicit method calls
