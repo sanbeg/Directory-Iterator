@@ -30,9 +30,9 @@ do {
   }
   ok(not(defined($list->next)), "no more files");
   for my $i (1..3) {
-    ok( $save{ File::Spec->join('t','data','n',$i) }, "found $i" );
+    ok( $save{ $tdn->path($i) }, "found $i" );
   }
-  ok( $save{ File::Spec->join('t','data','n','n2', 4) }, "found 4" );
+  ok( $save{ $tdn->path('n2/4') }, "found 4" );
 };
 
 do {
@@ -51,9 +51,9 @@ do {
   }
   ok(not(defined($list->next)), "no more files");
   for my $i (1..3) {
-    ok( $save{ File::Spec->join('t','data','n',$i) }, "found $i" );
+    ok( $save{ $tdn->path($i) }, "found $i" );
   }
-  ok( $save{ File::Spec->join('t','data','n','n2', 4) }, "found 4" );
+  ok( $save{ $tdn->path('n2/4') }, "found 4" );
 };
 
 do {
@@ -68,7 +68,7 @@ do {
   }
   is( keys(%save), 4, "Got 4 files from iterator" );
   for my $i (1..3) {
-    ok( $save{ File::Spec->join('t','data','n',$i) }, "found $i" );
+    ok( $save{ $tdn->path($i) }, "found $i" );
   }
 };
 
@@ -86,7 +86,7 @@ do {
   }
   ok(not(defined($list->next)), "no more files");
   for my $i (1..3, '.dot') {
-    ok( $save{ File::Spec->join('t','data','n',$i) }, "found $i" );
+    ok( $save{ $tdn->path($i) }, "found $i" );
   }
 
 };
@@ -119,7 +119,7 @@ do {
   is ($n_dirs, 2, 'found 2 dirs');
   ok(not(defined($list->next)), "no more files");
   for my $i (1..3) {
-    ok( $save{ File::Spec->join('t','data','n',$i) }, "found $i" );
+    ok( $save{ $tdn->path($i) }, "found $i" );
   }
     ok( $save{ File::Spec->join('t','data','n') }, "found n" );
 };
@@ -133,11 +133,7 @@ do {
   while ( $list->next ) {
 	  next unless $list->is_directory;
 	  ok( $list->is_directory , "Is directory");
-	  is (
-	    $list->prune_directory, 
-	    File::Spec->join('t','data', 'n', 'n2'),
-	    'pruned right dir'
-	   );
+	  is ($list->prune_directory, $tdn->path('n2'), 'pruned right dir');
 	  ++ $count;
   }
   is ($count, 1, 'found 1 file');
@@ -149,7 +145,7 @@ do {
 
   my $count=0;
   while ( $list->next ) {
-    if ( $list->get eq File::Spec->join('t','data', 'n', 'n2', 4)) {
+    if ( $list->get eq $tdn->path('n2/4')) {
       $list->prune;
       next;
     }
