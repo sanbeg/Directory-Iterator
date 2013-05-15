@@ -6,4 +6,5 @@ lib/Directory/Iterator/PP.pm
 t/Directory-Iterator-back.t
 t/BackendModule.pm
 t/dotfiles.t
+t/directories.t
 META.yml                                 Module meta-data (added by MakeMaker)
