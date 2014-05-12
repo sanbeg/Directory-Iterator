@@ -5,7 +5,7 @@ use strict;
 use warnings;
 
 
-our $VERSION = '1.001001';
+our $VERSION = '1.001002';
 
 use overload '<>' => sub{$_[0]->next};
 
