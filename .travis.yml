@@ -1,2 +1,9 @@
 language: perl
 
+env:
+  - module=Directory-Iterator-PP
+  - module=Directory-Iterator-XS
+  - module=Directory-Iterator
+
+script: cd $module && perl Makefile.PL && make test
+	
