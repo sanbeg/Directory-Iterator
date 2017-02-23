@@ -1,2 +1,2 @@
 language: perl
-
+install: true
