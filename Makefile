@@ -3,5 +3,5 @@ test: Directory-Iterator-PP.test Directory-Iterator-XS.test Directory-Iterator.t
 %.test: %
 	cd $< && cpanm --quiet --installdeps --notest .
 	cd $< && perl Makefile.PL
-	make -c $< test
+	make -C $< test
 
