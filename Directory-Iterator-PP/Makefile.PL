@@ -6,7 +6,7 @@ WriteMakefile(
     NAME              => 'Directory::Iterator::PP',
     VERSION_FROM      => 'lib/Directory/Iterator/PP.pm', # finds $VERSION
     PREREQ_PM         => {}, # e.g., Module::Name => 1.1
-    BUILD_REQUIRES    => { 'Test::Directory' => 0.2 },
+    BUILD_REQUIRES    => { 'Test::Directory' => 0.02 },
     ($] >= 5.005 ?     ## Add these new keywords supported since 5.005
       (ABSTRACT_FROM  => 'lib/Directory/Iterator/PP.pm', # retrieve abstract from module
        AUTHOR         => 'Steve Sanbeg <sanbeg@cpan.org>') : ()),
