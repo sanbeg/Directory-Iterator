@@ -6,4 +6,3 @@ env:
   - module=Directory-Iterator
 
 script: cd $module && perl Makefile.PL && make test
-	
